@@ -1,12 +1,11 @@
-const AppError = require("./errors/AppError");
+const AppError = require("../errors/AppError");
 const {
     launchBrowserAndNavigate,
     handleExtraElements,
     fetchCSVData,
-} = require("./browser/browserActions");
-const { parseCSVData } = require("./csv/csvParser");
+} = require("./browserActions");
 
-async function fetchAndParseCSV() {
+async function csvScraper() {
     let browser;
     try {
         const { browser: newBrowser, page } = await launchBrowserAndNavigate(
@@ -15,13 +14,9 @@ async function fetchAndParseCSV() {
         browser = newBrowser;
         await handleExtraElements(page);
         const csvData = await fetchCSVData(page);
-        await browser.close();
-        return await parseCSVData(csvData);
+        return csvData;
     } catch (err) {
-        if (browser) {
-            await browser.close();
-        }
-        throw new AppError("Failed in fetchAndParseCSV", 500, err);
+        throw new AppError("Failed scraping data: ", 500, err);
     } finally {
         if (browser) {
             await browser.close();
@@ -29,6 +24,4 @@ async function fetchAndParseCSV() {
     }
 }
 
-module.exports = {
-    fetchAndParseCSV,
-};
+module.exports = csvScraper;

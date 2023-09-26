@@ -1,14 +1,12 @@
 const ErrorHandler = require("./errorHandler");
-const { fetchAndParseCSV } = require("./app/fetchAndParse");
+const app = require("./app");
 const { pool } = require("./db/pool");
-const { saveToDatabase } = require("./db/db");
 
 let exitCode = 0; // default to success code
 
 async function main() {
     console.log("Starting the baseball data scraping process...");
-    const { players, stats } = await fetchAndParseCSV();
-    await saveToDatabase(players, stats);
+    await app.run();
 }
 
 main()
