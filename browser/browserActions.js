@@ -1,5 +1,6 @@
-const puppeteer = require("puppeteer");
-const AppError = require("./errors/AppError");
+import puppeteer from "puppeteer";
+
+import AppError from "../errors/AppError.js";
 
 const TIMEOUT = 5 * 60 * 1000;
 const WAIT_CLOSE_BUTTON = 500;
@@ -50,8 +51,4 @@ async function fetchCSVData(page) {
     }
 }
 
-module.exports = {
-    launchBrowserAndNavigate,
-    handleExtraElements,
-    fetchCSVData,
-};
+export { launchBrowserAndNavigate, handleExtraElements, fetchCSVData };

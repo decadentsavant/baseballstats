@@ -1,7 +1,7 @@
-const AppError = require("../errors/AppError");
-const { pool } = require("./pool");
+import AppError from "../errors/AppError.js";
+import pool from "./pool.js";
 
-async function saveToDatabase(players, stats) {
+export default async function saveToDatabase(players, stats) {
     const client = await pool.connect();
     try {
         await client.query("BEGIN");
@@ -54,7 +54,3 @@ async function saveToDatabase(players, stats) {
         client.release();
     }
 }
-
-module.exports = {
-    saveToDatabase,
-};

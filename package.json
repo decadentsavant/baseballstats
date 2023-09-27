@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Server for Aaron's baseball card trading",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

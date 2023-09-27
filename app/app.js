@@ -1,13 +1,9 @@
-const csvScraper = require("./browser/csvScraper");
-const parseCSVData = require("../csv/parseCSVData");
-const { saveToDatabase } = require("./db/db");
+import csvScraper from "../browser/csvScraper.js";
+import parseCSVData from "../csv/parseCSVData.js";
+import saveToDatabase from "../db/db.js";
 
-async function run() {
+export default async function app() {
     const rawCsvData = await csvScraper();
     const { players, stats } = await parseCSVData(rawCsvData);
     await saveToDatabase(players, stats);
 }
-
-module.exports = {
-    run,
-};

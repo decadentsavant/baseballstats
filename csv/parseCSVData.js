@@ -1,8 +1,9 @@
-const csvParser = require("csv-parser");
-const streamifier = require("streamifier");
-const AppError = require("../errors/AppError");
+import streamifier from "streamifier";
+import csvParser from "csv-parser";
 
-async function parseCSVData(csvData) {
+import AppError from "../errors/AppError.js";
+
+export default async function parseCSVData(csvData) {
     try {
         const csvStream = streamifier.createReadStream(csvData);
         const players = [];
@@ -50,7 +51,3 @@ async function parseCSVData(csvData) {
         throw new AppError("Failed to parse CSV data", 500, err);
     }
 }
-
-module.exports = {
-    parseCSVData,
-};

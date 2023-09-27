@@ -1,11 +1,11 @@
-const AppError = require("../errors/AppError");
-const {
+import AppError from "../errors/AppError.js";
+import {
     launchBrowserAndNavigate,
     handleExtraElements,
     fetchCSVData,
-} = require("./browserActions");
+} from "./browserActions.js";
 
-async function csvScraper() {
+export default async function csvScraper() {
     let browser;
     try {
         const { browser: newBrowser, page } = await launchBrowserAndNavigate(
@@ -23,5 +23,3 @@ async function csvScraper() {
         }
     }
 }
-
-module.exports = csvScraper;
