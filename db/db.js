@@ -2,7 +2,16 @@ import AppError from "../errors/AppError.js";
 import pool from "./pool.js";
 
 export default async function saveToDatabase(players, stats) {
-    const client = await pool.connect();
+    let client;
+
+    try {
+        console.log("Connecting to the database...");
+        client = await pool.connect();
+        console.log("Connected to the database.");
+    } catch (err) {
+        throw new AppError("Failed to connect to database...", 500, err);
+    }
+
     try {
         await client.query("BEGIN");
 
@@ -40,17 +49,20 @@ export default async function saveToDatabase(players, stats) {
                 ]
             );
         }
-
         await client.query("COMMIT");
     } catch (err) {
-        try {
-            console.error("Initiating rollback due to error.");
-            await client.query("ROLLBACK");
-        } catch (rollbackErr) {
-            console.error("Failed to rollback transaction: ", rollbackErr);
+        if (client) {
+            try {
+                console.error("Initiating rollback due to error.");
+                await client.query("ROLLBACK");
+            } catch (rollbackErr) {
+                console.error("Failed to rollback transaction: ", rollbackErr);
+            }
         }
         throw new AppError("Database operation failed", 500, err);
     } finally {
-        client.release();
+        if (client) {
+            client.release();
+        }
     }
 }

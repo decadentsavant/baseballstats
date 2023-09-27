@@ -1,3 +1,4 @@
+import "dotenv/config";
 import ErrorHandler from "./errors/errorHandler.js";
 import app from "./app/app.js";
 import pool from "./db/pool.js";

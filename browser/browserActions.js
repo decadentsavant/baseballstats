@@ -9,7 +9,7 @@ async function launchBrowserAndNavigate(url) {
     let browser, page;
     try {
         // headless boolean deprecated
-        browser = await puppeteer.launch({ headless: "new" });
+        browser = await puppeteer.launch({ headless: "true" });
         page = await browser.newPage();
         await page.goto(url, { timeout: TIMEOUT });
     } catch (err) {
